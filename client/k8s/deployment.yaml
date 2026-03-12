@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helpdesk-client
+  namespace: helpdesk-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helpdesk-client
+  template:
+    metadata:
+      labels:
+        app: helpdesk-client
+    spec:
+      containers:
+        - name: client
+          image: 192.168.1.200:5000/archlabs/helpdesk-client:v1-amd64
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80

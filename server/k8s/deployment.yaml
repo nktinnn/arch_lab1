@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: helpdesk-server
+  namespace: helpdesk-system
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: helpdesk-server
+  template:
+    metadata:
+      labels:
+        app: helpdesk-server
+    spec:
+      containers:
+        - name: server
+          image: 192.168.1.200:5000/archlabs/helpdesk-server:v1-amd64
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
+          envFrom:
+            - configMapRef:
+                name: helpdesk-config
+            - secretRef:
+                name: helpdesk-secrets
